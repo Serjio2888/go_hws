@@ -43,8 +43,13 @@ func TestInvalidData(t *testing.T) {
 	assert.Equal(t, false, Validation(query))
 	query = "[5-2]"
 	assert.Equal(t, false, Validation(query))
-	//query = ""
-	//assert.Equal(t, false, Validation(query))
+	// wrong number order
+	query = "42435/-123"
+	assert.Equal(t, false, Validation(query))
+	query = "42435++123"
+	assert.Equal(t, false, Validation(query))
+	query = "-42435*123"
+	assert.Equal(t, false, Validation(query))
 }
 
 func TestBracketsValidation(t *testing.T) {
