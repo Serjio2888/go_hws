@@ -38,26 +38,35 @@ func TestInvalidData(t *testing.T) {
 	assert.Equal(t, false, Validation(query))
 	query = "2+2=5"
 	assert.Equal(t, false, Validation(query))
+	// wrong brackets
+	query = "{2+2}"
+	assert.Equal(t, false, Validation(query))
+	query = "[5-2]"
+	assert.Equal(t, false, Validation(query))
+	//query = ""
+	//assert.Equal(t, false, Validation(query))
 }
 
 func TestBracketsValidation(t *testing.T) {
 	query := "(((10+5+14-19999)))"
 	assert.Equal(t, true, CheckBrackets(query))
-	query = "(((())))+(())"
+	query = "((((1+2)+3)-4)/2)+2*(15+(23-1))"
 	assert.Equal(t, true, CheckBrackets(query))
 	query = ""
 	assert.Equal(t, true, CheckBrackets(query))
-	query = "(()))"
+	query = "((33-2)/2)-2)"
 	assert.Equal(t, false, CheckBrackets(query))
-	query = "((())"
+	query = "(5+((11-0)/2)"
 	assert.Equal(t, false, CheckBrackets(query))
-	query = "((())))))))))))))))"
+	query = "(((14-88)/2)/3)/3)/4/1)+1)/2)/1)/1)/6)/1)/4))))"
 	assert.Equal(t, false, CheckBrackets(query))
 	query = "((()))((()))((())(())))"
 	assert.Equal(t, false, CheckBrackets(query))
 	query = "("
 	assert.Equal(t, false, CheckBrackets(query))
 	query = ")"
+	assert.Equal(t, false, CheckBrackets(query))
+	query = "(1+1"
 	assert.Equal(t, false, CheckBrackets(query))
 }
 

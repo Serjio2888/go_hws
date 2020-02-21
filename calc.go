@@ -21,7 +21,7 @@ func (st *IntStack) Pop() int {
 	if (len(st.stack)) < 1 {
 		return 0
 	}
-	var res int = st.stack[len(st.stack)-1]
+	res := st.stack[len(st.stack)-1]
 	st.stack = st.stack[:len(st.stack)-1]
 	return res
 }
@@ -38,7 +38,7 @@ func (st *Stack) Pop() string {
 	if (len(st.stack)) < 1 {
 		return ""
 	}
-	var res string = st.stack[len(st.stack)-1]
+	res := st.stack[len(st.stack)-1]
 	st.stack = st.stack[:len(st.stack)-1]
 	return res
 }
@@ -121,21 +121,22 @@ func Evaluate(s []byte) int {
 		case c == '/':
 			b = stack.Pop()
 			a = stack.Pop()
+			if b == 0 {
+				fmt.Println("zero division error")
+				os.Exit(-1)
+			}
 			stack.Push(a/b)
 			s = s[w:]
 		}
 		s = skipSpaces(s)
 	}
-
 	return stack.Pop()
 }
 
 func Tokenize(str string) string {
 	stack := Stack{}
-	// var str string = "(1144+2)-3"
-	var resStr string = ""
+	resStr := ""
 	last := ""
-	// new_elem := ""
 	for _, elem := range str {
 		if unicode.IsDigit(elem) {
 			last += string(elem)
@@ -171,7 +172,7 @@ func Tokenize(str string) string {
 }
 
 func Validation(query string) bool {
-	for _, runa := range query {
+	for i, runa := range query {
 		if unicode.IsDigit(runa) ||
 			runa == '+' || runa == '-' || runa == '/' || runa == '*' || runa == '(' || runa == ')' {
 			continue
@@ -210,7 +211,7 @@ func main() {
 		fmt.Println("error with data")
 		os.Exit(-1)
 	}
-	if !CheckBrackets("") {
+	if !CheckBrackets(query) {
 		fmt.Println("error with brackets")
 		os.Exit(-1)
 	}
