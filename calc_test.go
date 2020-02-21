@@ -50,6 +50,8 @@ func TestInvalidData(t *testing.T) {
 	assert.Equal(t, false, Validation(query))
 	query = "-42435*123"
 	assert.Equal(t, false, Validation(query))
+	query = "42435*123+"
+	assert.Equal(t, false, Validation(query))
 }
 
 func TestBracketsValidation(t *testing.T) {

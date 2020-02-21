@@ -168,24 +168,29 @@ func Tokenize(str string) string {
 	for stack.Len() > 0 {
 		resStr += stack.Pop() + " "
 	}
-	fmt.Println(resStr)
+	// fmt.Println(resStr)
 	return resStr
 }
 
+func CheckSigns(runa rune) bool {
+	if runa == '+' || runa == '-' || runa == '/' || runa == '*' {
+		return true
+	}
+	return false
+}
+
 func Validation(query string) bool {
-	last := '0'
-	for _, runa := range query {
-		if (runa == '+' || runa == '-' || runa == '/' || runa == '*') &&
-			(last == '+' || last == '-' || last == '/' || last == '*') {
-			return false
-		} else {
-			last = runa
-		}
-		if unicode.IsDigit(runa) || runa == '(' || runa == ')' {
+	if CheckSigns(rune(query[0])) || CheckSigns(rune(query[len(query)-1])) {
+		return false
+	}
+	for i, runa := range query {
+		if unicode.IsDigit(runa) || runa == '(' || runa == ')' || CheckSigns(runa) {
+			if (i > 0) && CheckSigns(runa) && (CheckSigns(rune(query[i-1]))) {
+				return false
+			}
 			continue
-		} else {
-			return false
 		}
+		return false
 	}
 	return true
 }
