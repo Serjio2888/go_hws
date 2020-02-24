@@ -12,7 +12,7 @@ func TestParsingArguments(t *testing.T) {
 		FileName:     "filename",
 	}
 	assert.Equal(t, paramsCheck, ParseArgs(args, params))
-	args = []string {"something", "filename", "-k", "4", "-o", "output.txt"}
+	args = []string {"something", "-k", "4", "-o", "output.txt", "filename"}
 	params = Params{}
 	paramsCheck = Params{
 		FileName:     "filename",
@@ -20,7 +20,7 @@ func TestParsingArguments(t *testing.T) {
 		ColumnNum:    4,
 	}
 	assert.Equal(t, paramsCheck, ParseArgs(args, params))
-	args = []string {"something", "filename.txt", "-k", "334", "-o", "output.txt", "-u", "-r", "-n", "-f"}
+	args = []string {"something", "-k", "334", "-o", "output.txt", "-u", "-r", "-n", "-f", "filename.txt"}
 	params = Params{}
 	paramsCheck = Params{
 		FileName:     "filename.txt",
@@ -59,7 +59,7 @@ func TestMainFunctions(t *testing.T) {
 	}
 	assert.Equal(t, answer, Sorter(text, params))
 
-	args = []string {"something", "test_files/example.txt", "-u"}
+	args = []string {"something", "-u", "test_files/example.txt"}
 	answer = []string {
 		"AAA aaa ppp l",
 		"AAA bbb ppp f",
@@ -81,7 +81,7 @@ func TestMainFunctions(t *testing.T) {
 	}
 	assert.Equal(t, answer, Sorter(text, params))
 
-	args = []string {"something", "test_files/example.txt", "-u", "-r"}
+	args = []string {"something", "-u", "-r", "test_files/example.txt"}
 	answer = []string {
 		"ddd ddd ddd k",
 		"aaa AAA ppp g",
@@ -105,7 +105,7 @@ func TestMainFunctions(t *testing.T) {
 }
 
 func TestIntSorter(t *testing.T) {
-	args := []string {"something", "test_files/numbers.txt", "-n"}
+	args := []string {"something", "-n", "test_files/numbers.txt"}
 	answer := []int {
 		-150, -150, 0, 0, 0, 11, 11, 12, 13, 14, 113,
 	}
@@ -115,7 +115,7 @@ func TestIntSorter(t *testing.T) {
 	arr = ParseFile(params.FileName, arr)
 	assert.Equal(t, answer, IntSorter(arr, params))
 
-	args = []string {"something", "test_files/numbers.txt", "-n", "-r"}
+	args = []string {"something", "-n", "-r", "test_files/numbers.txt"}
 	answer = []int {
 		113, 14, 13, 12, 11, 11, 0, 0, 0, -150, -150,
 	}
@@ -125,7 +125,7 @@ func TestIntSorter(t *testing.T) {
 	arr = ParseFile(params.FileName, arr)
 	assert.Equal(t, answer, IntSorter(arr, params))
 
-	args = []string {"something", "test_files/numbers.txt", "-n", "-r", "-u"}
+	args = []string {"something", "-n", "-r", "-u", "test_files/numbers.txt"}
 	answer = []int {
 		113, 14, 13, 12, 11, 0, 0, -150,
 	}
@@ -138,7 +138,7 @@ func TestIntSorter(t *testing.T) {
 
 func TestWorkWithFiles(t *testing.T) {
 	assert.FileExists(t, "strings.txt")
-	args := []string {"something", "test_files/numbers.txt", "-n", "-o", "answer.txt"}
+	args := []string {"something", "-n", "-o", "answer.txt", "test_files/numbers.txt"}
 	answer := []string {
 		"-150", "-150", "0", "0", "0", "11", "11", "12", "13", "14", "113", "",
 	}

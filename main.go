@@ -116,10 +116,15 @@ func Sorter(text TextToSort, params Params) []string {
 func ParseArgs(args []string, params Params) Params {
 	argsQuantity := len(args)
 	if argsQuantity < 2 {
-		panic("no file to sort")
+		fmt.Println("no file to sort")
+		os.Exit(-1)
 	}
-	params.FileName = args[1]
-	for i := 2; i < argsQuantity; i++ {
+	params.FileName = args[argsQuantity-1]
+	if params.FileName[0] == '-' {
+		fmt.Println("filename must be in the end of query")
+		os.Exit(-1)
+	}
+	for i := 1; i < argsQuantity-1; i++ {
 		switch args[i] {
 		case "-f": // не учитываем регистр
 			params.SkipCase = true
