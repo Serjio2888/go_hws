@@ -6,5 +6,4 @@ aaa aaa ppp h
 aaa aaa ppp h
 aaa AAA ppp g
 AAA bbb ppp f
-AAA bbb ppp f
 DDD DDD DDD e
