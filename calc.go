@@ -123,7 +123,7 @@ func Evaluate(s []byte) int {
 			a = stack.Pop()
 			if b == 0 {
 				fmt.Println("zero division error")
-				os.Exit(-1)
+				os.Exit(1)
 			}
 			stack.Push(a/b)
 			s = s[w:]
@@ -168,7 +168,6 @@ func Tokenize(str string) string {
 	for stack.Len() > 0 {
 		resStr += stack.Pop() + " "
 	}
-	// fmt.Println(resStr)
 	return resStr
 }
 
@@ -188,9 +187,9 @@ func Validation(query string) bool {
 			if (i > 0) && CheckSigns(runa) && (CheckSigns(rune(query[i-1]))) {
 				return false
 			}
-			continue
+		} else {
+			return false
 		}
-		return false
 	}
 	return true
 }
@@ -218,14 +217,18 @@ func CheckBrackets(query string) bool {
 }
 
 func main() {
+	if len(os.Args) < 1 {
+		fmt.Println("not enough arguments to work with")
+		os.Exit(1)
+	}
 	query := os.Args[1]
 	if !Validation(query) {
 		fmt.Println("error with data")
-		os.Exit(-1)
+		os.Exit(1)
 	}
 	if !CheckBrackets(query) {
 		fmt.Println("error with brackets")
-		os.Exit(-1)
+		os.Exit(1)
 	}
 	fmt.Println(Evaluate([]byte(Tokenize(query))))
 }
